@@ -1,11 +1,11 @@
-package swyg.hobiti
+package swyg.hollang
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class HobitiApplication
+class HollangApplication
 
 fun main(args: Array<String>) {
-    runApplication<HobitiApplication>(*args)
+    runApplication<HollangApplication>(*args)
 }

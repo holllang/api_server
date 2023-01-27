@@ -1,1 +1,1 @@
-rootProject.name = "hobiti"
+rootProject.name = "hollang"

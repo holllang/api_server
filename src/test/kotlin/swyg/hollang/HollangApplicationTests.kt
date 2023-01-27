@@ -1,10 +1,10 @@
-package swyg.hobiti
+package swyg.hollang
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class HobitiApplicationTests {
+class HollangApplicationTests {
 
     @Test
     fun contextLoads() {
