@@ -27,6 +27,10 @@ extra["springCloudVersion"] = "2022.0.1"
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // JSON in MySQL
+    implementation("io.hypersistence:hypersistence-utils-hibernate-60:3.1.1")
+
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
