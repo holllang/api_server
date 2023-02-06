@@ -1,0 +1,16 @@
+server:
+  port: 80
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/hollang_prod
+    username: root
+    password: 11111111
+
+logging:
+  level:
+    root: info

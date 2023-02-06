@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  database:
+    container_name: hollang-database-dev
+    image: "mysql"
+    restart: always
+    volumes:
+      - hollang-database-dev-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_USERNAME: root
+      MYSQL_ROOT_PASSWORD: 11111111
+      MYSQL_DATABASE: hollang_dev
+    ports:
+      - "3306:3306"
+
+volumes:
+  hollang-database-dev-data:
