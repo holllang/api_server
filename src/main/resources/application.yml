@@ -1,1 +1,23 @@
+spring:
+  config:
+    activate:
+      on-profile: prod, dev, test
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  jpa:
+    open-in-view: false
 
+server:
+  error:
+    whitelabel:
+      enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  endpoint:
+    health:
+      show-details: always
