@@ -43,7 +43,7 @@ jobs:
           mkdir env
           touch env/api_server.env
           echo "${{ secrets.API_SERVER_PROD_ENV }}" > env/api_server.env
-          shell: bash
+        shell: bash
 
       - name: aws configure
         uses: aws-actions/configure-aws-credentials@v1
