@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: prod, dev, test
+      on-profile: prod, dev, local, test
   servlet:
     multipart:
       max-file-size: 10MB

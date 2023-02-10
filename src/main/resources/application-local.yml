@@ -1,19 +1,19 @@
 server:
-  port: 80
+  port: 8080
 
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DATABASE}
-    username: ${MYSQL_ROOT_USERNAME}
-    password: ${MYSQL_ROOT_PASSWORD}
+    url: jdbc:mysql://127.0.0.1:3306/hollang_local
+    username: root
+    password: 11111111
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true

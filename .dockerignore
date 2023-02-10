@@ -1,0 +1,13 @@
+### GIT ###
+.git
+.gitignore
+.github
+
+### TEST ###
+src/test/
+
+### DOCKER COMPOSE ###
+docker-compose.*.yml
+
+### DEPLOY FILES ###
+codedeploy/

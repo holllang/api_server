@@ -6,10 +6,8 @@ services:
     restart: always
     volumes:
       - hollang-database-test-data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_USERNAME: root
-      MYSQL_ROOT_PASSWORD: 11111111
-      MYSQL_DATABASE: hollang_test
+    env_file:
+      - ./env/test/mysql.env
     ports:
       - "3306:3306"
 
