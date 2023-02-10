@@ -81,7 +81,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          zip -r api-app-codedeploy-$IMAGE_TAG.zip ./scripts appspec.yml
+          zip -r api-app-codedeploy-$IMAGE_TAG.zip ./scripts ./env/api_server.env appspec.yml
           aws s3 cp --region ap-northeast-2 --acl private ./api-app-codedeploy-$IMAGE_TAG.zip s3://hollang-codedeploy/api_services/prod/
 
       - name: start deploy
