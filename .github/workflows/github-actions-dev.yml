@@ -63,19 +63,19 @@ jobs:
           DOCKER_CONTAINER_NAME: hollang-api-server-dev
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile-dev .
-          docker push $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile-dev .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           mkdir scripts
           touch scripts/stop_services.sh
           echo "docker rm -f $DOCKER_CONTAINER_NAME 2> /dev/null || true" >> scripts/stop_services.sh
           
           touch scripts/config_services.sh
-          echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin $AWS_ECR_REGISTRY" >> scripts/config_services.sh
-          echo "docker pull $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_TAG" >> scripts/config_services.sh
+          echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin $ECR_REGISTRY" >> scripts/config_services.sh
+          echo "docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/config_services.sh
           
           touch scripts/start_services.sh
           echo "docker run -p 80:80 --env-file ./env/api_server.env --network hollang-backend \
-          -d --restart always --name $DOCKER_CONTAINER_NAME $AWS_ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_TAG" >> scripts/start_services.sh
+          -d --restart always --name $DOCKER_CONTAINER_NAME $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/start_services.sh
 
       - name: upload deploy files to AWS S3
         env:
