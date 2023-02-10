@@ -42,7 +42,7 @@ jobs:
         run: |
           mkdir env
           touch env/api_server.env
-          echo "${{ secrets.API_SERVER_DEV_ENV }}" >> env/api_server.env
+          echo "${{ secrets.API_SERVER_DEV_ENV }}" > env/api_server.env
           shell: bash
 
       - name: aws configure
