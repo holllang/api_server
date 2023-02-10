@@ -41,8 +41,8 @@ jobs:
       - name: Setting env files
         run: |
           mkdir env
-          touch ./env/api_server.env
-          echo "${{ secrets.API_SERVER_PROD_ENV }}" >> ./env/api_server.env
+          touch env/api_server.env
+          echo "${{ secrets.API_SERVER_PROD_ENV }}" >> env/api_server.env
           shell: bash
 
       - name: aws configure
