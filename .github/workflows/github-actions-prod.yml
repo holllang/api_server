@@ -91,4 +91,4 @@ jobs:
           aws deploy create-deployment --application-name HollangApplication \
           --deployment-config-name CodeDeployDefault.ECSLinear10PercentEvery1Minutes \
           --deployment-group-name production \
-          --s3-location bucket=s3://hollang-codedeploy,bundleType=zip,key=api_services/prod/api-app-codedeploy-$IMAGE_TAG.zip
+          --s3-location bucket=hollang-codedeploy,bundleType=zip,key=api_services/prod/api-app-codedeploy-$IMAGE_TAG.zip
