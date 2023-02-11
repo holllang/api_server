@@ -91,5 +91,5 @@ jobs:
         run: |
           aws deploy create-deployment --application-name HollangApplication \
           --deployment-config-name CodeDeployDefault.OneAtATime \
-          --deployment-group-name develop \
+          --deployment-group-name develop-spring \
           --s3-location bucket=hollang-codedeploy,bundleType=zip,key=api_services/dev/api-app-codedeploy-$IMAGE_TAG.zip
