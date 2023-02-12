@@ -8,11 +8,6 @@ spring:
   jpa:
     open-in-view: false
 
-server:
-  error:
-    whitelabel:
-      enabled: false
-
 management:
   endpoints:
     web:
