@@ -1,27 +1,28 @@
 package swyg.hollang.entity
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
 import swyg.hollang.entity.common.BaseTimeEntity
 
 @Entity
 class Answer (
 
-    @Id
-    @Column(name = "answer_number")
-    var number: Long? = null,
-
     @ManyToOne
-    @JoinColumn(name = "question_number")
-    var question: Question? = null,
+    @JoinColumn(name = "question_id", nullable = false)
+    var question: Question,
+
+    @Column(name = "answer_number", nullable = false)
+    var number: Long,
 
     @Column(name = "content", nullable = false)
-    var content: String? = null,
+    var content: String,
 
-    @Column(name = "img_url")
-    var imgUrl: String? = null
+    @Column(name = "img_url", nullable = false)
+    var imgUrl: String
 
-) : BaseTimeEntity()
+) : BaseTimeEntity() {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "answer_id")
+    var id: Long? = null
+
+}

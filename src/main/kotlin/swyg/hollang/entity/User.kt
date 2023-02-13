@@ -8,14 +8,16 @@ import swyg.hollang.entity.common.BaseTimeEntity
 @Entity
 class User (
 
+    @Column(name = "name", nullable = false)
+    var name: String,
+
+) : BaseTimeEntity() {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    var id: Long? = null,
-
-    @Column(name = "name", nullable = false)
-    var name: String? = null,
+    var id: Long? = null
 
     @OneToOne(mappedBy = "user", fetch = LAZY, cascade = [ALL])
     var testResponse: TestResponse? = null
 
-) : BaseTimeEntity()
+}

@@ -8,21 +8,26 @@ import swyg.hollang.entity.common.BaseTimeEntity
 @Entity
 class Question (
 
-    @Id
-    @Column(name = "question_number")
-    var number: Long? = null,
+    @Column(name = "question_number", nullable = false)
+    var number: Long,
 
     @ManyToOne
-    @JoinColumn(name = "test_id")
-    var test: Test? = null,
-
-    @OneToMany(mappedBy = "question", fetch = LAZY, cascade = [ALL])
-    var answers: List<Answer>? = null,
+    @JoinColumn(name = "test_id", nullable = false)
+    var test: Test,
 
     @Column(name = "content", nullable = false)
-    var content: String? = null,
+    var content: String,
 
-    @Column(name = "img_url")
-    var imgUrl: String? = null
+    @Column(name = "img_url", nullable = false)
+    var imgUrl: String
 
-) : BaseTimeEntity()
+) : BaseTimeEntity() {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "question_id")
+    var id: Long? = null
+
+    @OneToMany(mappedBy = "question", fetch = LAZY, cascade = [ALL])
+    var answers: MutableList<Answer> = mutableListOf()
+
+}

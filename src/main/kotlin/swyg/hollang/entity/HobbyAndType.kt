@@ -11,12 +11,12 @@ class HobbyAndType (
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "hobby_id")
-    var hobby: Hobby? = null,
+    @JoinColumn(name = "hobby_id", nullable = false)
+    var hobby: Hobby,
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "hobby_type_id")
-    var hobbyType: HobbyType? = null
+    @JoinColumn(name = "hobby_type_id", nullable = false)
+    var hobbyType: HobbyType
 
 ) : BaseTimeEntity()
