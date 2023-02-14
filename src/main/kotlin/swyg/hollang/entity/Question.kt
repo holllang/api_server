@@ -19,8 +19,8 @@ class Question (
     @Column(name = "content", nullable = false)
     var content: String,
 
-    @Column(name = "img_url", nullable = false)
-    var imgUrl: String
+    @Column(name = "image_url", nullable = false)
+    var imageUrl: String
 
 ) : BaseTimeEntity() {
 
