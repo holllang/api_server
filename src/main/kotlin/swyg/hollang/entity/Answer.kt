@@ -14,10 +14,7 @@ class Answer (
     var number: Long,
 
     @Column(name = "content", nullable = false)
-    var content: String,
-
-    @Column(name = "img_url", nullable = false)
-    var imgUrl: String
+    var content: String
 
 ) : BaseTimeEntity() {
 

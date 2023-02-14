@@ -2,7 +2,6 @@ package swyg.hollang.entity
 
 import jakarta.persistence.*
 import jakarta.persistence.CascadeType.ALL
-import jakarta.persistence.FetchType.EAGER
 import jakarta.persistence.FetchType.LAZY
 import swyg.hollang.entity.common.BaseTimeEntity
 
