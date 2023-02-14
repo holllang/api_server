@@ -28,7 +28,7 @@ class Question (
     @Column(name = "question_id")
     var id: Long? = null
 
-    @OneToMany(mappedBy = "question", fetch = LAZY, cascade = [ALL])
+    @OneToMany(mappedBy = "question", fetch = LAZY, cascade = [ALL], orphanRemoval = true)
     @BatchSize(size = 100)
     var answers: MutableList<Answer> = mutableListOf()
 

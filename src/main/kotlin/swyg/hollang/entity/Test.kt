@@ -17,6 +17,6 @@ class Test (
     @Column(name = "test_id")
     var id: Long? = null
 
-    @OneToMany(mappedBy = "test", fetch = LAZY, cascade = [ALL])
+    @OneToMany(mappedBy = "test", fetch = LAZY, cascade = [ALL], orphanRemoval = true)
     var questions: MutableList<Question> = mutableListOf()
 }
