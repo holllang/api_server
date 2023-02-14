@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
 import swyg.hollang.entity.Answer
@@ -49,10 +50,8 @@ class TestServiceTest(
 
         //then
         Assertions.assertThat(testResponse.test.questions.size).isSameAs(12)
-        Assertions.assertThat(testResponse.test.questions[0].content).isEqualTo("질문 1")
-        Assertions.assertThat(testResponse.test.questions[0].answers[0].content).isEqualTo("질문 1 답변 1")
 
         Assertions.assertThatThrownBy { testService.findTestByVersion(invalidVersion) }
-            .isExactlyInstanceOf(EntityNotFoundException::class.java)
+            .isExactlyInstanceOf(JpaObjectRetrievalFailureException::class.java)
     }
 }

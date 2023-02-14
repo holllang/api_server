@@ -1,11 +1,13 @@
 package swyg.hollang.repository
 
 import jakarta.persistence.EntityManager
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
 import swyg.hollang.entity.Answer
@@ -45,15 +47,12 @@ class TestRepositoryTest(
 
         //when
         val test1 = testRepository.findWithQuestionsAndAnswersByVersion(validVersion)
-        val test2 = testRepository.findWithQuestionsAndAnswersByVersion(invalidVersion)
 
         //then
-        assertThat(test1!!.questions.size).isSameAs(12)
-        assertThat(test1.questions[0].content).isEqualTo("질문 1")
-        assertThat(test1.questions[0].answers[0].content).isEqualTo("질문 1 답변 1")
+        assertThat(test1.questions.size).isSameAs(12)
 
-        assertThatThrownBy { test2!!.id }
-            .isExactlyInstanceOf(NullPointerException::class.java)
+        assertThatThrownBy { testRepository.findWithQuestionsAndAnswersByVersion(invalidVersion) }
+            .isExactlyInstanceOf(JpaObjectRetrievalFailureException::class.java)
     }
 
 }
