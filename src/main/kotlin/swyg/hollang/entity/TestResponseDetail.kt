@@ -8,12 +8,12 @@ class TestResponseDetail (
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "test_response_id")
-    var testResponse: TestResponse? = null,
+    @JoinColumn(name = "test_response_id", nullable = false, updatable = false)
+    var testResponse: TestResponse,
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "answer_id")
-    var answer: Answer? = null
+    @JoinColumn(name = "answer_id", nullable = false, updatable = false)
+    var answer: Answer
 
 ) : BaseTimeEntity()

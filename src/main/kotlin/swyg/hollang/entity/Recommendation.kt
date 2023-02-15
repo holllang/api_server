@@ -11,11 +11,11 @@ class Recommendation (
 
     @Id
     @OneToOne
-    @JoinColumn(name = "test_response_id")
-    var testResponse: TestResponse? = null,
+    @JoinColumn(name = "test_response_id", nullable = false, updatable = false)
+    var testResponse: TestResponse,
 
     @Type(JsonType::class)
-    @Column(name = "result", columnDefinition = "json")
-    var result: Map<String, Objects>? = null
+    @Column(name = "result", columnDefinition = "json", nullable = false, updatable = false)
+    var result: MutableMap<String, Objects>? = mutableMapOf()
 
 ) : BaseTimeEntity()

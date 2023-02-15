@@ -7,6 +7,8 @@ spring:
       max-file-size: 10MB
   jpa:
     open-in-view: false
+  mvc:
+    throw-exception-if-no-handler-found: true
 
 management:
   endpoints:
