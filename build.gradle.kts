@@ -31,6 +31,10 @@ dependencies {
     // JSON in MySQL
     implementation("io.hypersistence:hypersistence-utils-hibernate-60:3.1.1")
 
+    //EXCEL
+    implementation("org.apache.poi:poi:5.0.0")
+    implementation("org.apache.poi:poi-ooxml:5.0.0")
+
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
