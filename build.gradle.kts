@@ -32,8 +32,11 @@ dependencies {
     implementation("io.hypersistence:hypersistence-utils-hibernate-60:3.1.1")
 
     //EXCEL
-    implementation("org.apache.poi:poi:5.0.0")
-    implementation("org.apache.poi:poi-ooxml:5.0.0")
+    implementation("org.apache.poi:poi:5.1.0")
+    implementation("org.apache.poi:poi-ooxml:5.1.0")
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.232")
+    implementation("software.amazon.awssdk:kms:2.17.97")
+    implementation("software.amazon.awssdk:s3:2.17.97")
 
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")

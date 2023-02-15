@@ -1,7 +1,11 @@
 package swyg.hollang
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
+import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import jakarta.annotation.PostConstruct
 import jakarta.persistence.EntityManager
+import org.apache.poi.ss.usermodel.Workbook
+import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -18,13 +22,11 @@ import java.net.URI
 @Profile(value = ["local", "dev"])
 class InitDb(private val initService: InitService) {
 
-    private val filePath: String = System.getenv("INIT_DATA_FILE_PATH")
-
     @PostConstruct
     fun init() {
-        initService.initTestData(filePath, 1)
-        initService.initHobbyTypeData(filePath)
-        initService.initHobbyData(filePath)
+        initService.initTestData(1)
+        initService.initHobbyTypeData()
+        initService.initHobbyData()
     }
 
     @Component
@@ -34,19 +36,28 @@ class InitDb(private val initService: InitService) {
         @Autowired private val em: EntityManager) {
 
         private val s3BucketUrl: String = System.getenv("S3_BUCKET_URL")
+        fun initFile(): Workbook {
+            if(activeProfile == "dev") {
+                val s3Client = AmazonS3ClientBuilder.standard()
+                    .withCredentials(DefaultAWSCredentialsProviderChain())
+                    .withRegion("ap-northeast-2")
+                    .build()
 
-        fun initFile(filePath: String): File {
-            return if(activeProfile == "dev"){
-                File(URI(filePath))
+                val s3Object = s3Client.getObject(
+                    System.getenv("S3_BUCKET_NAME"), System.getenv("S3_INIT_DATA_KEY"))
+                val excelInputStream = s3Object.objectContent
+
+                return WorkbookFactory.create(excelInputStream)
             } else {
-                File(filePath)
+                val file = File("/Users/chaeminlee/Documents/Repository/swyg/api_server/initData.xlsx")
+                val inputStream: InputStream = file.inputStream()
+
+                return WorkbookFactory.create(inputStream)
             }
         }
 
-        fun initTestData(filePath: String, testVersion: Long) {
-            val file = initFile(filePath)
-            val inputStream: InputStream = file.inputStream()
-            val workbook = XSSFWorkbook(inputStream)
+        fun initTestData(testVersion: Long) {
+            val workbook = initFile()
 
             val sheet = workbook.getSheet("test")
             val test = Test(testVersion)
@@ -66,10 +77,8 @@ class InitDb(private val initService: InitService) {
             em.persist(test)
         }
 
-        fun initHobbyData(filePath: String) {
-            val file = initFile(filePath)
-            val inputStream: InputStream = file.inputStream()
-            val workbook = XSSFWorkbook(inputStream)
+        fun initHobbyData() {
+            val workbook = initFile()
 
             val sheet = workbook.getSheet("hobby")
             for (rowIndex in 1..sheet.lastRowNum) {
@@ -84,10 +93,8 @@ class InitDb(private val initService: InitService) {
             }
         }
 
-        fun initHobbyTypeData(filePath: String) {
-            val file = initFile(filePath)
-            val inputStream: InputStream = file.inputStream()
-            val workbook = XSSFWorkbook(inputStream)
+        fun initHobbyTypeData() {
+            val workbook = initFile()
 
             val sheet = workbook.getSheet("hobby_type")
             for (rowIndex in 1..sheet.lastRowNum) {
