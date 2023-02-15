@@ -83,7 +83,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           zip -r api-app-codedeploy-$IMAGE_TAG.zip ./scripts ./env/api_server.env appspec.yml
-          aws s3 cp --region ap-northeast-2 --acl private ./api-app-codedeploy-$IMAGE_TAG.zip s3://hollang-codedeploy/api_services/prod/
+          aws s3 cp --region ap-northeast-2 --acl private ./api-app-codedeploy-$IMAGE_TAG.zip s3://hollang-deploy/api_services/prod/
 
       - name: start deploy
         env:
@@ -92,4 +92,4 @@ jobs:
           aws deploy create-deployment --application-name HollangApplication \
           --deployment-config-name CodeDeployDefault.ECSLinear10PercentEvery1Minutes \
           --deployment-group-name production-spring \
-          --s3-location bucket=hollang-codedeploy,bundleType=zip,key=api_services/prod/api-app-codedeploy-$IMAGE_TAG.zip
+          --s3-location bucket=hollang-deploy,bundleType=zip,key=api_services/prod/api-app-codedeploy-$IMAGE_TAG.zip

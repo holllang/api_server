@@ -35,7 +35,8 @@ class InitDb(private val initService: InitService) {
         @Value("\${spring.config.activate.on-profile}") private val activeProfile: String,
         @Autowired private val em: EntityManager) {
 
-        private val s3BucketUrl: String = System.getenv("S3_BUCKET_URL")
+        private val s3BucketName: String = System.getenv("S3_BUCKET_NAME")
+
         fun initFile(): Workbook {
             if(activeProfile == "dev") {
                 val s3Client = AmazonS3ClientBuilder.standard()
@@ -43,13 +44,12 @@ class InitDb(private val initService: InitService) {
                     .withRegion("ap-northeast-2")
                     .build()
 
-                val s3Object = s3Client.getObject(
-                    System.getenv("S3_BUCKET_NAME"), System.getenv("S3_INIT_DATA_KEY"))
+                val s3Object = s3Client.getObject(s3BucketName, System.getenv("S3_INIT_DATA_KEY"))
                 val excelInputStream = s3Object.objectContent
 
                 return WorkbookFactory.create(excelInputStream)
             } else {
-                val file = File("/Users/chaeminlee/Documents/Repository/swyg/api_server/initData.xlsx")
+                val file = File(System.getenv("INIT_DATA_PATH"))
                 val inputStream: InputStream = file.inputStream()
 
                 return WorkbookFactory.create(inputStream)
@@ -64,7 +64,7 @@ class InitDb(private val initService: InitService) {
             for (rowIndex in 1..sheet.lastRowNum) {
                 val row = sheet.getRow(rowIndex)
                 val question = Question(rowIndex.toLong(), test, row.getCell(0).stringCellValue,
-                    "$s3BucketUrl/question${rowIndex}.png")
+                    "https://$s3BucketName.s3.ap-northeast-2.amazonaws.com/images/question/question${rowIndex}.png")
                 for (cellIndex in row.firstCellNum + 1..row.firstCellNum + 2) {
                     val cell = row.getCell(cellIndex)
                     val cellValue = cell?.stringCellValue
@@ -87,7 +87,7 @@ class InitDb(private val initService: InitService) {
                     mutableListOf(),
                     row.getCell(0).stringCellValue,
                     row.getCell(1).stringCellValue,
-                    "$s3BucketUrl/${row.getCell(2).stringCellValue}.png"
+                    "https://$s3BucketName.s3.ap-northeast-2.amazonaws.com/images/hobby/${row.getCell(2).stringCellValue}.png"
                 )
                 em.persist(hobby)
             }
@@ -102,8 +102,8 @@ class InitDb(private val initService: InitService) {
                 val hobbyType = HobbyType(
                     row.getCell(0).stringCellValue,
                     row.getCell(1).stringCellValue,
-                    "$s3BucketUrl/${row.getCell(2).stringCellValue}.fbx",
-                    "$s3BucketUrl/${row.getCell(3).stringCellValue}.png"
+                    "https://$s3BucketName.s3.ap-northeast-2.amazonaws.com/images/hobby_type/${row.getCell(2).stringCellValue}.fbx",
+                    "https://$s3BucketName.s3.ap-northeast-2.amazonaws.com/images/hobby_type/${row.getCell(3).stringCellValue}.png"
                 )
                 em.persist(hobbyType)
             }
