@@ -4,12 +4,15 @@ import jakarta.annotation.PostConstruct
 import jakarta.persistence.EntityManager
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Profile
+import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import swyg.hollang.entity.*
 import java.io.File
 import java.io.InputStream
+import java.net.URI
 
 @Component
 @Profile(value = ["local", "dev"])
@@ -26,12 +29,22 @@ class InitDb(private val initService: InitService) {
 
     @Component
     @Transactional
-    class InitService(@Autowired private val em: EntityManager) {
+    class InitService(
+        @Value("\${spring.config.activate.on-profile}") private val activeProfile: String,
+        @Autowired private val em: EntityManager) {
 
         private val s3BucketUrl: String = System.getenv("S3_BUCKET_URL")
 
+        fun initFile(filePath: String): File {
+            return if(activeProfile == "dev"){
+                File(URI(filePath))
+            } else {
+                File(filePath)
+            }
+        }
+
         fun initTestData(filePath: String, testVersion: Long) {
-            val file = File(filePath)
+            val file = initFile(filePath)
             val inputStream: InputStream = file.inputStream()
             val workbook = XSSFWorkbook(inputStream)
 
@@ -54,7 +67,7 @@ class InitDb(private val initService: InitService) {
         }
 
         fun initHobbyData(filePath: String) {
-            val file = File(filePath)
+            val file = initFile(filePath)
             val inputStream: InputStream = file.inputStream()
             val workbook = XSSFWorkbook(inputStream)
 
@@ -72,7 +85,7 @@ class InitDb(private val initService: InitService) {
         }
 
         fun initHobbyTypeData(filePath: String) {
-            val file = File(filePath)
+            val file = initFile(filePath)
             val inputStream: InputStream = file.inputStream()
             val workbook = XSSFWorkbook(inputStream)
 
