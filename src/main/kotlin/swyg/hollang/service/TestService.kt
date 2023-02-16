@@ -3,7 +3,7 @@ package swyg.hollang.service
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import swyg.hollang.dto.TestDetailsResponse
-import swyg.hollang.repository.TestRepository
+import swyg.hollang.repository.test.TestRepository
 
 @Service
 @Transactional(readOnly = true)

@@ -31,6 +31,7 @@ class InitDb(private val initService: InitService) {
 
     @Component
     @Transactional
+    @Profile(value = ["local", "dev"])
     class InitService(
         @Value("\${spring.config.activate.on-profile}") private val activeProfile: String,
         @Autowired private val em: EntityManager) {

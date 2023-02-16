@@ -12,13 +12,15 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
 import swyg.hollang.entity.Answer
 import swyg.hollang.entity.Question
+import swyg.hollang.repository.test.TestRepository
 
 @Transactional
 @SpringBootTest
 @ActiveProfiles(value = ["test"])
 class TestRepositoryTest(
     @Autowired private val em: EntityManager,
-    @Autowired private val testRepository: TestRepository) {
+    @Autowired private val testRepository: TestRepository
+) {
 
     @BeforeEach
     fun beforeEach() {

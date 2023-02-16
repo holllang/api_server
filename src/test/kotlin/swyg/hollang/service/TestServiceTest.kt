@@ -3,6 +3,7 @@ package swyg.hollang.service
 import jakarta.persistence.EntityManager
 import jakarta.persistence.EntityNotFoundException
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -49,9 +50,9 @@ class TestServiceTest(
         val testResponse = testService.findTestByVersion(validVersion)
 
         //then
-        Assertions.assertThat(testResponse.test.questions.size).isSameAs(12)
+        assertThat(testResponse.test.questions.size).isSameAs(12)
 
-        Assertions.assertThatThrownBy { testService.findTestByVersion(invalidVersion) }
+        assertThatThrownBy { testService.findTestByVersion(invalidVersion) }
             .isExactlyInstanceOf(JpaObjectRetrievalFailureException::class.java)
     }
 }
