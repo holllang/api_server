@@ -14,3 +14,7 @@ spring:
 logging:
   level:
     root: info
+
+inferring:
+  server:
+    host: hollang-inferring-server-dev

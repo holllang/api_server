@@ -24,3 +24,7 @@ logging:
       hibernate:
         SQL: debug
         type: trace
+
+inferring:
+  server:
+    host: hollang-inferring-server-dev

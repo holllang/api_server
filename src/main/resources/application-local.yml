@@ -25,3 +25,8 @@ logging:
       hibernate:
         SQL: debug
         type: trace
+
+
+inferring:
+  server:
+    host: 127.0.0.1
