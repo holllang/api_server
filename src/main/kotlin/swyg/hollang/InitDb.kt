@@ -6,11 +6,9 @@ import jakarta.annotation.PostConstruct
 import jakarta.persistence.EntityManager
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.WorkbookFactory
-import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Profile
-import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import swyg.hollang.entity.*
@@ -103,8 +101,10 @@ class InitDb(private val initService: InitService) {
                 val hobbyType = HobbyType(
                     row.getCell(0).stringCellValue,
                     row.getCell(1).stringCellValue,
-                    "https://$s3BucketName.s3.ap-northeast-2.amazonaws.com/images/hobby_type/${row.getCell(2).stringCellValue}.fbx",
-                    "https://$s3BucketName.s3.ap-northeast-2.amazonaws.com/images/hobby_type/${row.getCell(3).stringCellValue}.png"
+                    row.getCell(2).stringCellValue,
+                    "https://$s3BucketName.s3.ap-northeast-2.amazonaws.com/images/hobby_type/${row.getCell(3).stringCellValue}.fbx",
+                    "https://$s3BucketName.s3.ap-northeast-2.amazonaws.com/images/hobby_type/${row.getCell(4).stringCellValue}.png",
+                    mutableListOf(row.getCell(5).stringCellValue, row.getCell(6).stringCellValue, row.getCell(7).stringCellValue)
                 )
                 em.persist(hobbyType)
             }

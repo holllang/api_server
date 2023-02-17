@@ -18,7 +18,7 @@ class TestResponse (
     @Column(name = "test_response_id")
     var id: Long? = null
 
-    @OneToOne(mappedBy = "testResponse", cascade = [ALL], orphanRemoval = true)
+    @OneToOne(mappedBy = "testResponse", fetch = LAZY, cascade = [ALL], orphanRemoval = true)
     var recommendation: Recommendation? = null
 
     @OneToMany(mappedBy = "testResponse", fetch = LAZY, cascade = [ALL], orphanRemoval = true)
