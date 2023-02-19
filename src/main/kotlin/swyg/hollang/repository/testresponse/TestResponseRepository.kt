@@ -6,4 +6,5 @@ import swyg.hollang.entity.User
 interface TestResponseRepository {
 
     fun save(user: User): TestResponse
+    fun countAll(): Long
 }

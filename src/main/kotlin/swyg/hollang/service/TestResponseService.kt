@@ -14,4 +14,8 @@ class TestResponseService(private val testResponseRepository: TestResponseReposi
     fun createTestResponse(user: User): TestResponse {
         return testResponseRepository.save(user)
     }
+
+    fun countAllTestResponse(): Long {
+        return testResponseRepository.countAll()
+    }
 }

@@ -35,4 +35,21 @@ class TestResponseRepositoryTest(
         assertThat(findTestResponse.size).isSameAs(1)
         assertThat(findTestResponse[0]).isEqualTo(savedTestResponse)
     }
+
+    @Test
+    fun countAll(){
+        //given
+        val testCount = 10L
+        for(i in 1..testCount){
+            val createdUser = User("쨈$i")
+            em.persist(createdUser)
+            val createdTestResponse = TestResponse(createdUser)
+            em.persist(createdTestResponse)
+        }
+        //when
+        val testResponseCount = testResponseRepository.countAll()
+
+        //then
+        assertThat(testResponseCount).isSameAs(testCount)
+    }
 }

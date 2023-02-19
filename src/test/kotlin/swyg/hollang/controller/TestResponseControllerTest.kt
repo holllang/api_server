@@ -12,9 +12,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.transaction.annotation.Transactional
-import swyg.hollang.entity.Answer
-import swyg.hollang.entity.Hobby
-import swyg.hollang.entity.Question
+import swyg.hollang.entity.*
 
 @Transactional
 @SpringBootTest
@@ -45,20 +43,20 @@ class TestResponseControllerTest(
 
         val hobby1 = Hobby(
             mutableListOf(),
-            "등산",
-            "등산 상세정보",
+            "요가",
+            "요가 상세정보",
             "https://example.com/hollang.png"
         )
         val hobby2 = Hobby(
             mutableListOf(),
-            "무에타이",
-            "무에타이 상세정보",
+            "목공예",
+            "목공예 상세정보",
             "https://example.com/hollang.png"
         )
         val hobby3 = Hobby(
             mutableListOf(),
-            "클라이밍",
-            "클라이밍 상세정보",
+            "헬스",
+            "헬스 상세정보",
             "https://example.com/hollang.png"
         )
         em.persist(hobby1)
@@ -131,5 +129,34 @@ class TestResponseControllerTest(
                 .content(requestBody))
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+    }
+
+    @Test
+    fun countAllTestResponse(){
+
+        //given
+        val testCount = 10L
+        for(i in 1..testCount){
+            val createdUser = User("쨈$i")
+            em.persist(createdUser)
+            val createdTestResponse = TestResponse(createdUser)
+            em.persist(createdTestResponse)
+        }
+
+        //then
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/test-responses/count")
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(MockMvcResultMatchers.content().json("{\n" +
+                    "    \"code\": \"OK\",\n" +
+                    "    \"message\": \"요청이 성공하였습니다.\",\n" +
+                    "    \"data\": {\n" +
+                    "        \"testResponse\": {\n" +
+                    "            \"count\": 10\n" +
+                    "        }\n" +
+                    "    }\n" +
+                    "}"))
     }
 }

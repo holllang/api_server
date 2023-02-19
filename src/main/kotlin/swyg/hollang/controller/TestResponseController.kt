@@ -3,10 +3,12 @@ package swyg.hollang.controller
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import swyg.hollang.dto.CountAllTestResponseResponse
 import swyg.hollang.dto.CreateTestResponseRequest
 import swyg.hollang.dto.CreateTestResponseResponse
 import swyg.hollang.dto.TestDetailsResponse
@@ -49,5 +51,16 @@ class TestResponseController(
                 HttpStatus.OK.name,
                 WebProperties.SUCCESS_RESPONSE_MESSAGE,
                 CreateTestResponseResponse(createdUser, createdRecommendation)))
+    }
+
+    @GetMapping("/count")
+    fun countAllTestResponse(): ResponseEntity<SuccessResponse<CountAllTestResponseResponse>> {
+        val numberOfTestResponse = testResponseService.countAllTestResponse()
+        return ResponseEntity.ok()
+            .body(SuccessResponse(
+                HttpStatus.OK.name,
+                WebProperties.SUCCESS_RESPONSE_MESSAGE,
+                CountAllTestResponseResponse(numberOfTestResponse)
+            ))
     }
 }

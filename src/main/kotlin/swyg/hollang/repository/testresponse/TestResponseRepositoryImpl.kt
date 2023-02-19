@@ -12,4 +12,8 @@ class TestResponseRepositoryImpl(private val testResponseJpaRepository: TestResp
         return testResponseJpaRepository.save(TestResponse(user))
     }
 
+    override fun countAll(): Long {
+        return testResponseJpaRepository.countAll()
+    }
+
 }
