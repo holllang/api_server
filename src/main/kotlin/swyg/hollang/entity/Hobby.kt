@@ -25,9 +25,9 @@ class Hobby (
     var description: String,
 
     @Column(name = "img_url", nullable = false)
-    var imgUrl: String,
+    var imageUrl: String,
 
-) : BaseTimeEntity() {
+    ) : BaseTimeEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hobby_id")

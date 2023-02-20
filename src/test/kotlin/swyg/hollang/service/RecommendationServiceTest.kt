@@ -61,4 +61,29 @@ class RecommendationServiceTest(
         assertThat(createdRecommendation).isEqualTo(findRecommendation[0])
         assertThat(createdRecommendation.result.toString()).isEqualTo(findRecommendation[0].result.toString())
     }
+
+    @Test
+    fun getRecommendationWithUserById(){
+        //given
+        val createdUser = User("쨈")
+        em.persist(createdUser)
+        val createdTestResponse = TestResponse(createdUser)
+        em.persist(createdTestResponse)
+
+        val hobbyType = mutableMapOf("name" to "홀랑 유형")
+        val hobbies = mutableListOf<MutableMap<String, String>>()
+        hobbies.add(mutableMapOf("name" to "홀랑 1"))
+        hobbies.add(mutableMapOf("name" to "홀랑 2"))
+        hobbies.add(mutableMapOf("name" to "홀랑 3"))
+        val createRecommendationResultResponse = CreateRecommendationResultResponse(hobbies, hobbyType)
+        val createdRecommendation = recommendationService
+            .save(createdTestResponse, createRecommendationResultResponse)
+
+        //when
+        val findRecommendation = recommendationService.getRecommendationWithUserById(createdRecommendation.id!!)
+
+        //then
+        assertThat(findRecommendation.testResponse.user.name).isEqualTo("쨈")
+        assertThat((findRecommendation.result!!["hobbyType"] as Map<String, String>)["name"]).isEqualTo("홀랑 유형")
+    }
 }

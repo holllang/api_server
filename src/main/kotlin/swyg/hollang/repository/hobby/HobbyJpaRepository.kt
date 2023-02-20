@@ -6,4 +6,6 @@ import swyg.hollang.entity.Hobby
 interface HobbyJpaRepository: JpaRepository<Hobby, Long> {
 
     fun findByName(name: String): Hobby?
+
+    fun findByNameIsIn(names: List<String>): List<Hobby>
 }

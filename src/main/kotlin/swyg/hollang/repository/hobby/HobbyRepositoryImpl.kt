@@ -11,4 +11,8 @@ class HobbyRepositoryImpl(private val hobbyJpaRepository: HobbyJpaRepository): H
         return hobbyJpaRepository.findByName(name)
             ?: throw EntityNotFoundException("취미 $name 을 찾을 수 없습니다.")
     }
+
+    override fun findByNameIsIn(names: List<String>): List<Hobby> {
+        return hobbyJpaRepository.findByNameIsIn(names)
+    }
 }
