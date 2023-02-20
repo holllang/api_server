@@ -27,4 +27,4 @@ logging:
 
 inferring:
   server:
-    host: hollang-inferring-server-dev
+    host: ${INFERRING_SERVER_HOST}
