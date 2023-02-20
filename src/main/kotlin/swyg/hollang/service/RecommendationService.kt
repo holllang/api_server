@@ -21,4 +21,7 @@ class RecommendationService(private val recommendationRepository: Recommendation
         return recommendationRepository.save(testResponse, result)
     }
 
+    fun getRecommendationWithUserById(recommendationId: Long): Recommendation {
+        return recommendationRepository.findWithUserById(recommendationId)
+    }
 }

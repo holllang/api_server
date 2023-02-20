@@ -16,12 +16,12 @@ class HobbyType(
     var mbtiType: String,
 
     @Column(name = "three_dimension_img_url", nullable = false)
-    var threeDimensionImgUrl: String,
+    var threeDimensionImageUrl: String,
 
     @Column(name = "img_url", nullable = false)
-    var imgUrl: String,
+    var imageUrl: String,
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
         name="fit_hobby_type",
         joinColumns = [JoinColumn(name = "hobby_type_id")]

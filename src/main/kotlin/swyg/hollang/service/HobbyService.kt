@@ -2,6 +2,7 @@ package swyg.hollang.service
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import swyg.hollang.entity.Hobby
 import swyg.hollang.repository.hobby.HobbyRepository
 
 @Service
@@ -16,5 +17,9 @@ class HobbyService(private val hobbyRepository: HobbyRepository) {
             findHobby.recommendCount = findHobby.recommendCount?.plus(1)
         }
 
+    }
+
+    fun getHobbyByName(names: List<String>): List<Hobby> {
+        return hobbyRepository.findByNameIsIn(names)
     }
 }
