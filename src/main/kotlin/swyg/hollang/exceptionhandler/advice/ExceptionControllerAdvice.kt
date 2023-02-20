@@ -1,11 +1,15 @@
 package swyg.hollang.exceptionhandler.advice
 
+import org.slf4j.LoggerFactory
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.validation.BindException
 import org.springframework.web.HttpRequestMethodNotSupportedException
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -14,11 +18,37 @@ import org.springframework.web.servlet.NoHandlerFoundException
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import swyg.hollang.dto.common.ExceptionResponse
+import java.util.logging.Logger
 
 @Order(1)
 @EnableWebMvc
 @RestControllerAdvice
 class ExceptionControllerAdvice : ResponseEntityExceptionHandler() {
+
+    override fun handleHttpMessageNotReadable(
+        ex: HttpMessageNotReadableException,
+        headers: HttpHeaders,
+        status: HttpStatusCode,
+        request: WebRequest
+    ): ResponseEntity<Any>? {
+        logger.error(ex.cause)
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(ExceptionResponse(HttpStatus.BAD_REQUEST.name, ex.message.toString()))
+    }
+
+    override fun handleMethodArgumentNotValid(
+        ex: MethodArgumentNotValidException,
+        headers: HttpHeaders,
+        status: HttpStatusCode,
+        request: WebRequest
+    ): ResponseEntity<Any>? {
+        val defaultMessage = ex.bindingResult.fieldError?.defaultMessage
+        logger.error(ex.cause)
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(ExceptionResponse(HttpStatus.BAD_REQUEST.name, ex.message))
+    }
 
     override fun handleMissingServletRequestParameter(
         ex: MissingServletRequestParameterException,
@@ -26,6 +56,7 @@ class ExceptionControllerAdvice : ResponseEntityExceptionHandler() {
         status: HttpStatusCode,
         request: WebRequest
     ): ResponseEntity<Any>? {
+        logger.error(ex.cause)
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(ExceptionResponse(HttpStatus.BAD_REQUEST.name, ex.message))
@@ -37,6 +68,7 @@ class ExceptionControllerAdvice : ResponseEntityExceptionHandler() {
         status: HttpStatusCode,
         request: WebRequest
     ): ResponseEntity<Any>? {
+        logger.error(ex.cause)
         return ResponseEntity
             .status(HttpStatus.METHOD_NOT_ALLOWED)
             .body(ExceptionResponse(HttpStatus.METHOD_NOT_ALLOWED.name, ex.message.toString()))
@@ -48,6 +80,7 @@ class ExceptionControllerAdvice : ResponseEntityExceptionHandler() {
         status: HttpStatusCode,
         request: WebRequest
     ): ResponseEntity<Any>? {
+        logger.error(ex.cause)
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
             .body(ExceptionResponse(HttpStatus.NOT_FOUND.name, ex.message.toString()))
@@ -55,6 +88,7 @@ class ExceptionControllerAdvice : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(Exception::class)
     fun exHandler(ex: Exception): ResponseEntity<ExceptionResponse> {
+        logger.error(ex.cause)
         return ResponseEntity
             .internalServerError()
             .body(ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR.name, ex.message.toString()))

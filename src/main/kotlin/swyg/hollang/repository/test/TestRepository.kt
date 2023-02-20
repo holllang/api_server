@@ -1,4 +1,4 @@
-package swyg.hollang.repository
+package swyg.hollang.repository.test
 
 import swyg.hollang.entity.Test
 

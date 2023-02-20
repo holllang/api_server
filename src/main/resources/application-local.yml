@@ -20,7 +20,13 @@ spring:
 
 logging:
   level:
+    root: info
     org:
       hibernate:
         SQL: debug
         type: trace
+
+
+inferring:
+  server:
+    host: 127.0.0.1

@@ -1,25 +1,24 @@
-package swyg.hollang.service
+package swyg.hollang.repository
 
 import jakarta.persistence.EntityManager
-import jakarta.persistence.EntityNotFoundException
-import org.assertj.core.api.Assertions
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.orm.jpa.JpaObjectRetrievalFailureException
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
 import swyg.hollang.entity.Answer
 import swyg.hollang.entity.Question
+import swyg.hollang.repository.answer.AnswerRepository
 
 @Transactional
 @SpringBootTest
 @ActiveProfiles(value = ["test"])
-class TestServiceTest(
+class AnswerRepositoryTest(
     @Autowired private val em: EntityManager,
-    @Autowired private val testService: TestService) {
+    @Autowired private val answerRepository: AnswerRepository
+) {
 
     @BeforeEach
     fun beforeEach() {
@@ -41,18 +40,18 @@ class TestServiceTest(
     }
 
     @Test
-    fun findTestByVersion() {
+    fun findByQuestionNumberWithTestVersion() {
         //given
-        val validVersion: Long = 1
-        val invalidVersion: Long = 2
+        val answerNumber: Long = 2
+        val questionNumber: Long = 1
+        val testVersion: Long = 1
 
         //when
-        val testResponse = testService.findTestByVersion(validVersion)
+        val findAnswer =
+            answerRepository.findByQuestionNumberWithTestVersion(answerNumber, questionNumber, testVersion)
 
         //then
-        assertThat(testResponse.test.questions.size).isSameAs(12)
-
-        assertThatThrownBy { testService.findTestByVersion(invalidVersion) }
-            .isExactlyInstanceOf(JpaObjectRetrievalFailureException::class.java)
+        assertThat(findAnswer.content).isEqualTo("질문 1 답변 2")
+        assertThat(findAnswer.question.content).isEqualTo("질문 1")
     }
 }

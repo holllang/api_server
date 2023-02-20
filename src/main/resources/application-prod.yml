@@ -14,3 +14,7 @@ spring:
 logging:
   level:
     root: info
+
+inferring:
+  server:
+    host: ${INFERRING_SERVER_HOST}

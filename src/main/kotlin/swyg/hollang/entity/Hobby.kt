@@ -33,10 +33,7 @@ class Hobby (
     @Column(name = "hobby_id")
     var id: Long? = null
 
-    @OneToMany(mappedBy = "hobby", cascade = [CascadeType.ALL])
-    var hobbyAndTypes: MutableList<HobbyAndType> = mutableListOf()
-
     @Column(name = "recommend_count")
     @ColumnDefault(value = 0.toString())
-    var recommendCount: Long? = null
+    var recommendCount: Long? = 0
 }

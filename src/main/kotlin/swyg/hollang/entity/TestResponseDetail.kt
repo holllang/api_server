@@ -2,8 +2,10 @@ package swyg.hollang.entity
 
 import jakarta.persistence.*
 import swyg.hollang.entity.common.BaseTimeEntity
+import swyg.hollang.entity.id.TestResponseDetailId
 
 @Entity
+@IdClass(TestResponseDetailId::class)
 class TestResponseDetail (
 
     @Id
