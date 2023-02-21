@@ -1,6 +1,8 @@
 package swyg.hollang.repository.hobby
 
 import jakarta.persistence.EntityNotFoundException
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 import swyg.hollang.entity.Hobby
 
@@ -14,5 +16,9 @@ class HobbyRepositoryImpl(private val hobbyJpaRepository: HobbyJpaRepository): H
 
     override fun findByNameIsIn(names: List<String>): List<Hobby> {
         return hobbyJpaRepository.findByNameIsIn(names)
+    }
+
+    override fun findAll(pageable: Pageable): Page<Hobby> {
+        return hobbyJpaRepository.findAll(pageable)
     }
 }
