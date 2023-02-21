@@ -1,5 +1,7 @@
 package swyg.hollang.service
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import swyg.hollang.entity.Hobby
@@ -21,5 +23,9 @@ class HobbyService(private val hobbyRepository: HobbyRepository) {
 
     fun getHobbyByName(names: List<String>): List<Hobby> {
         return hobbyRepository.findByNameIsIn(names)
+    }
+
+    fun getHobbies(pageable: Pageable): Page<Hobby> {
+        return hobbyRepository.findAll(pageable)
     }
 }

@@ -7,8 +7,11 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
+import swyg.hollang.entity.Category
 import swyg.hollang.entity.Hobby
 
 @Transactional
@@ -22,13 +25,14 @@ class HobbyServiceTest(
     @BeforeEach
     fun beforeEach() {
 
-        for (i in 1..3) {
+        for (i in 1..40) {
             val hobby = Hobby(
-                mutableListOf(),
+                mutableListOf(Category("category$i", 1)),
                 "홀랑 $i",
                 "홀랑 $i 상세정보",
                 "https://example.com/hollang$i.png"
             )
+            hobby.recommendCount = 40L - i
             em.persist(hobby)
         }
     }
@@ -49,5 +53,19 @@ class HobbyServiceTest(
             .resultList
 
         assertThat(findHobby[0].recommendCount).isSameAs(1L)
+    }
+
+    @Test
+    fun getHobbies(){
+        //given
+        val pageRequest = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "recommendCount"))
+
+        //when
+        val findHobbies = hobbyService.getHobbies(pageRequest)
+
+        //then
+        assertThat(findHobbies.pageable.pageSize).isSameAs(20)
+        assertThat(findHobbies.content[0].name).isEqualTo("홀랑 1")
+
     }
 }
