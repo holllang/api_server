@@ -22,13 +22,5 @@ logging:
   level:
     org:
       hibernate:
-        SQL: debug
+        SQL: info
         type: trace
-
-inferring:
-  server:
-    host: ${INFERRING_SERVER_HOST}
-
-client:
-  server:
-    host: ${CLIENT_SERVER_HOST}

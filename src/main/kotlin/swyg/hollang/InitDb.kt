@@ -34,7 +34,14 @@ class InitDb(private val initService: InitService) {
         @Value("\${spring.config.activate.on-profile}") private val activeProfile: String,
         @Autowired private val em: EntityManager) {
 
-        private val s3BucketName: String = System.getenv("S3_BUCKET_NAME")
+        @Value("\${aws.s3.bucket}")
+        private lateinit var bucketName: String
+
+        @Value("\${aws.s3.init-data-key}")
+        private lateinit var initDataKey: String
+
+        @Value("\${aws.cloudfront.host}")
+        private lateinit var cloudfrontHost: String
 
         fun initFile(): Workbook {
             if(activeProfile == "dev") {
@@ -43,12 +50,12 @@ class InitDb(private val initService: InitService) {
                     .withRegion("ap-northeast-2")
                     .build()
 
-                val s3Object = s3Client.getObject(s3BucketName, System.getenv("S3_INIT_DATA_KEY"))
+                val s3Object = s3Client.getObject(bucketName, initDataKey)
                 val excelInputStream = s3Object.objectContent
 
                 return WorkbookFactory.create(excelInputStream)
             } else {
-                val file = File(System.getenv("INIT_DATA_PATH"))
+                val file = File(initDataKey)
                 val inputStream: InputStream = file.inputStream()
 
                 return WorkbookFactory.create(inputStream)
@@ -62,8 +69,12 @@ class InitDb(private val initService: InitService) {
             val test = Test(testVersion)
             for (rowIndex in 1..sheet.lastRowNum) {
                 val row = sheet.getRow(rowIndex)
-                val question = Question(rowIndex.toLong(), test, row.getCell(0).stringCellValue,
-                    "https://$s3BucketName.s3.ap-northeast-2.amazonaws.com/images/question/question${rowIndex}.png")
+
+                val number = rowIndex.toLong()
+                val content = row.getCell(0).stringCellValue
+                val imageUrl =
+                    "${cloudfrontHost}/images/question/question${rowIndex}.png"
+                val question = Question(number, test, content, imageUrl)
                 for (cellIndex in row.firstCellNum + 1..row.firstCellNum + 2) {
                     val cell = row.getCell(cellIndex)
                     val cellValue = cell?.stringCellValue
@@ -82,12 +93,14 @@ class InitDb(private val initService: InitService) {
             val sheet = workbook.getSheet("hobby")
             for (rowIndex in 1..sheet.lastRowNum) {
                 val row = sheet.getRow(rowIndex)
-                val hobby = Hobby(
-                    mutableListOf(),
-                    row.getCell(0).stringCellValue,
-                    row.getCell(1).stringCellValue,
-                    "https://$s3BucketName.s3.ap-northeast-2.amazonaws.com/images/hobby/${row.getCell(2).stringCellValue}.png"
-                )
+
+                val categories = mutableListOf<Category>()
+                val name = row.getCell(0).stringCellValue
+                val description = row.getCell(1).stringCellValue
+                val imageName = row.getCell(2).stringCellValue
+                val imageUrl =
+                    "${cloudfrontHost}/images/hobby/$imageName.png"
+                val hobby = Hobby(categories, name, description, imageUrl)
                 em.persist(hobby)
             }
         }
@@ -98,13 +111,25 @@ class InitDb(private val initService: InitService) {
             val sheet = workbook.getSheet("hobby_type")
             for (rowIndex in 1..sheet.lastRowNum) {
                 val row = sheet.getRow(rowIndex)
+
+                val name = row.getCell(0).stringCellValue
+                val description = row.getCell(1).stringCellValue
+                val mbtiType = row.getCell(2).stringCellValue
+                val threeDimensionImageUrl =
+                    "${cloudfrontHost}/images/hobby_type/${mbtiType}.gif"
+                val imageUrl = "${cloudfrontHost}/images/hobby_type/${mbtiType}.png"
+                val fitHobbyTypes = mutableListOf(
+                    row.getCell(3).stringCellValue,
+                    row.getCell(4).stringCellValue,
+                    row.getCell(5).stringCellValue
+                )
                 val hobbyType = HobbyType(
-                    row.getCell(0).stringCellValue,
-                    row.getCell(1).stringCellValue,
-                    row.getCell(2).stringCellValue,
-                    "https://$s3BucketName.s3.ap-northeast-2.amazonaws.com/images/hobby_type/${row.getCell(3).stringCellValue}.fbx",
-                    "https://$s3BucketName.s3.ap-northeast-2.amazonaws.com/images/hobby_type/${row.getCell(4).stringCellValue}.png",
-                    mutableListOf(row.getCell(5).stringCellValue, row.getCell(6).stringCellValue, row.getCell(7).stringCellValue)
+                    name,
+                    description,
+                    mbtiType,
+                    threeDimensionImageUrl,
+                    imageUrl,
+                    fitHobbyTypes
                 )
                 em.persist(hobbyType)
             }
