@@ -2,6 +2,7 @@ package swyg.hollang.controller
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -13,6 +14,7 @@ import swyg.hollang.utils.WebProperties
 
 @RestController
 @RequestMapping("/tests")
+@CrossOrigin(origins = ["\${client.server.host}"])
 class TestController(private val testService: TestService) {
 
     @GetMapping

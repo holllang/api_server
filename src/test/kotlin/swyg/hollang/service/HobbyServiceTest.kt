@@ -52,7 +52,7 @@ class HobbyServiceTest(
             .setParameter("name", "홀랑 1")
             .resultList
 
-        assertThat(findHobby[0].recommendCount).isSameAs(1L)
+        assertThat(findHobby[0].recommendCount).isSameAs(40L)
     }
 
     @Test

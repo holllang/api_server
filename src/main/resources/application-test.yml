@@ -29,3 +29,7 @@ logging:
 inferring:
   server:
     host: 127.0.0.1
+
+client:
+  server:
+    host: "*"

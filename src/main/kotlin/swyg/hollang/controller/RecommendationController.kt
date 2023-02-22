@@ -2,10 +2,7 @@ package swyg.hollang.controller
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import swyg.hollang.dto.RecommendHobbyAndTypesResponse
 import swyg.hollang.dto.common.SuccessResponse
 import swyg.hollang.service.HobbyService
@@ -15,6 +12,7 @@ import swyg.hollang.utils.WebProperties
 
 @RestController
 @RequestMapping("/recommendations")
+@CrossOrigin(origins = ["\${client.server.host}"])
 class RecommendationController(
     private val recommendationService: RecommendationService,
     private val hobbyService: HobbyService,

@@ -10,7 +10,7 @@ import swyg.hollang.entity.common.BaseTimeEntity
 @DynamicInsert  //DML 작동시 null값이 아닌 값만 작동함
 class Hobby (
 
-    @ManyToMany(fetch = LAZY)
+    @ManyToMany(fetch = LAZY, cascade = [CascadeType.ALL])
     @JoinTable(
         name = "hobby_category",
         joinColumns = [JoinColumn(name = "hobby_id")],
