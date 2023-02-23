@@ -10,5 +10,6 @@ data class GetHobbiesRankResponse(@JsonIgnore val hobbiesEntity: List<Hobby>) {
         val id: Long = hobbyEntity.id!!
         val name: String = hobbyEntity.name
         val recommendCount: Long = hobbyEntity.recommendCount!!
+        val imageUrl: String = hobbyEntity.imageUrl
     }
 }
