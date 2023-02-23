@@ -21,7 +21,7 @@ class HobbyType(
     @Column(name = "img_url", nullable = false)
     var imageUrl: String,
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
         name="fit_hobby_type",
         joinColumns = [JoinColumn(name = "hobby_type_id")]

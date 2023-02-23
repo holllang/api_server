@@ -7,4 +7,6 @@ import swyg.hollang.entity.TestResponseDetail
 interface TestResponseDetailRepository {
 
     fun save(testResponse: TestResponse, answer: Answer): TestResponseDetail
+
+    fun batchInsert(testResponseDetails: List<TestResponseDetail>)
 }

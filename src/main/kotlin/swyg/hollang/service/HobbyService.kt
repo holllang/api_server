@@ -14,11 +14,8 @@ class HobbyService(private val hobbyRepository: HobbyRepository) {
     //추천받은 취미의 추천 카운트를 1씩 증가
     @Transactional
     fun addHobbiesRecommendCount(hobbies: MutableList<MutableMap<String, String>>){
-        for (hobby in hobbies) {
-            val findHobby = hobbyRepository.findByName(hobby["name"]!!)
-            findHobby.recommendCount = findHobby.recommendCount?.plus(1)
-        }
-
+        val names = hobbies.map { it["name"]!! }
+        hobbyRepository.updateRecommendCountByName(names)
     }
 
     fun getHobbyByName(names: List<String>): List<Hobby> {

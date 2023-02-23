@@ -11,4 +11,6 @@ interface HobbyRepository {
     fun findByNameIsIn(names: List<String>): List<Hobby>
 
     fun findAll(pageable: Pageable): Page<Hobby>
+
+    fun updateRecommendCountByName(name: List<String>): Int
 }

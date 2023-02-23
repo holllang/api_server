@@ -7,8 +7,8 @@ import swyg.hollang.entity.Answer
 interface AnswerJpaRepository: JpaRepository<Answer, Long> {
 
     @Query("select a from Answer a " +
-            "where a.number = :answerNumber " +
-            "and a.question.number = :questionNumber " +
-            "and a.question.test.version = :testVersion")
+            "join fetch a.question aq " +
+            "join fetch aq.test aqt " +
+            "where a.number = :answerNumber and aq.number = :questionNumber and aqt.version = :testVersion")
     fun findByQuestionNumberWithTestVersion(answerNumber: Long, questionNumber: Long, testVersion: Long): Answer?
 }

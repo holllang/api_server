@@ -5,4 +5,5 @@ import swyg.hollang.entity.TestResponseDetail
 import swyg.hollang.entity.id.TestResponseDetailId
 
 interface TestResponseDetailJpaRepository: JpaRepository<TestResponseDetail, TestResponseDetailId> {
+
 }

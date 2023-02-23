@@ -21,4 +21,8 @@ class HobbyRepositoryImpl(private val hobbyJpaRepository: HobbyJpaRepository): H
     override fun findAll(pageable: Pageable): Page<Hobby> {
         return hobbyJpaRepository.findAll(pageable)
     }
+
+    override fun updateRecommendCountByName(name: List<String>): Int {
+        return hobbyJpaRepository.updateRecommendCountByName(name)
+    }
 }

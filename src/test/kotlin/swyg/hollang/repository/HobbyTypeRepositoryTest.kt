@@ -40,7 +40,7 @@ class HobbyTypeRepositoryTest(
         val mbtiType = "ENFP"
 
         //when
-        val findHobbyType = hobbyTypeRepository.findByMbtiType(mbtiType)
+        val findHobbyType = hobbyTypeRepository.findWithFitHobbyTypesByMbtiType(mbtiType)
 
         //then
         assertThat(findHobbyType.mbtiType).isEqualTo("ENFP")
