@@ -19,7 +19,7 @@ class TestResponseDetailService(
     @Transactional
     fun createTestResponseDetail(
         testResponse: TestResponse,
-        createTestResponseDetailRequests: MutableList<CreateTestResponseDetailRequest>) {
+        createTestResponseDetailRequests: MutableList<CreateTestResponseDetailRequest>): Int {
 
         val testResponseDetails = mutableListOf<TestResponseDetail>()
         for (createTestResponseDetailRequest in createTestResponseDetailRequests) {
@@ -31,6 +31,7 @@ class TestResponseDetailService(
             val testResponseDetail = TestResponseDetail(testResponse, findAnswer)
             testResponseDetails.add(testResponseDetail)
         }
-        testResponseDetailRepository.batchInsert(testResponseDetails)
+
+        return testResponseDetailRepository.batchInsert(testResponseDetails)
     }
 }

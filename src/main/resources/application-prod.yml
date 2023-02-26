@@ -13,4 +13,5 @@ spring:
 
 logging:
   level:
-    root: info
+    root: INFO
+    swyg.hollang: INFO

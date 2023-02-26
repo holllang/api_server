@@ -20,7 +20,5 @@ spring:
 
 logging:
   level:
-    org:
-      hibernate:
-        SQL: info
-        type: trace
+    root: INFO
+    swyg.hollang: DEBUG

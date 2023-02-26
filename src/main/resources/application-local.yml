@@ -20,12 +20,13 @@ spring:
 
 logging:
   level:
-    root: info
+    root: INFO
+    swyg.hollang: DEBUG
     org:
       hibernate:
-        SQL: debug
-        type: trace
+        SQL: DEBUG
+        type: TRACE
       springframework:
         jdbc:
           core:
-            JdbcTemplate: debug
+            JdbcTemplate: DEBUG

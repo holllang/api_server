@@ -20,8 +20,8 @@ class TestResponseDetailRepositoryImpl(
     }
 
     //Batch size를 지정하여 벌크 연산을 진행
-    override fun batchInsert(testResponseDetails: List<TestResponseDetail>) {
-        jdbcTemplate.batchUpdate(
+    override fun batchInsert(testResponseDetails: List<TestResponseDetail>): Int {
+        return jdbcTemplate.batchUpdate(
             "insert into test_response_detail(test_response_id, answer_id) values (?, ?)",
             testResponseDetails, 50){
             ps, argument ->
@@ -29,7 +29,7 @@ class TestResponseDetailRepositoryImpl(
             argument.updatedAt = ZonedDateTime.now()
             ps.setLong(1, argument.testResponse.id!!)
             ps.setLong(2, argument.answer.id!!)
-        }
+        }.size
     }
 
 }
