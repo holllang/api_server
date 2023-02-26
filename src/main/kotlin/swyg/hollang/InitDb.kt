@@ -73,7 +73,7 @@ class InitDb(private val initService: InitService) {
                 val number = rowIndex.toLong()
                 val content = row.getCell(0).stringCellValue
                 val imageUrl =
-                    "${cloudfrontHost}/images/question/question${rowIndex}.png"
+                    "${cloudfrontHost}/images/question/question${rowIndex}.JPG"
                 val question = Question(number, test, content, imageUrl)
                 for (cellIndex in row.firstCellNum + 1..row.firstCellNum + 2) {
                     val cell = row.getCell(cellIndex)
