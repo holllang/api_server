@@ -16,6 +16,6 @@ class WebConfig: WebMvcConfigurer {
         registry.addInterceptor(LogInterceptor())
             .order(0)
             .addPathPatterns(LOG_INCLUDE_PATH)
-            .excludePathPatterns("/**")
+            .excludePathPatterns("/css/**", "/*.ico")
     }
 }
