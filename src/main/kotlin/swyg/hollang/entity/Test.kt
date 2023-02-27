@@ -1,21 +1,22 @@
 package swyg.hollang.entity
 
 import jakarta.persistence.*
-import jakarta.persistence.CascadeType.*
-import jakarta.persistence.FetchType.*
+import jakarta.persistence.CascadeType.ALL
+import jakarta.persistence.FetchType.LAZY
 import swyg.hollang.entity.common.BaseTimeEntity
 
 @Entity
 class Test (
 
+    @Column(name = "version", unique = true, updatable = false, nullable = false)
+    var version: Long
+
+) : BaseTimeEntity() {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "test_id")
-    var id: Long? = null,
+    var id: Long? = null
 
-    @Column(name = "version", unique = true, updatable = false, nullable = false)
-    var version: Long? = null,
-
-    @OneToMany(mappedBy = "test", fetch = LAZY, cascade = [ALL])
-    var questions: List<Question>? = null
-
-) : BaseTimeEntity()
+    @OneToMany(mappedBy = "test", fetch = LAZY, cascade = [ALL], orphanRemoval = true)
+    var questions: MutableList<Question> = mutableListOf()
+}

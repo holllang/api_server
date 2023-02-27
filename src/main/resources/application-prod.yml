@@ -7,10 +7,12 @@ spring:
       on-profile: prod
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/hollang_prod
-    username: root
-    password: 11111111
+    url: jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DATABASE}
+    username: ${MYSQL_ROOT_USERNAME}
+    password: ${MYSQL_ROOT_PASSWORD}
 
 logging:
+  config: classpath:logback.xml
   level:
-    root: info
+    root: INFO
+    swyg.hollang: INFO

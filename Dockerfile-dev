@@ -8,6 +8,6 @@ COPY ${JAR_FILE} hollang-dev.jar
 
 ENV PROFILES dev
 
-EXPOSE 8080
+EXPOSE 80
 
 ENTRYPOINT ["java", "-Dspring.profiles.active=${PROFILES}", "-jar", "/app/hollang-dev.jar"]

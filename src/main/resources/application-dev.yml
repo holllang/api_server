@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 80
 
 spring:
   config:
@@ -7,9 +7,9 @@ spring:
       on-profile: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/hollang_dev
-    username: root
-    password: 11111111
+    url: jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DATABASE}
+    username: ${MYSQL_ROOT_USERNAME}
+    password: ${MYSQL_ROOT_PASSWORD}
   jpa:
     generate-ddl: true
     hibernate:
@@ -19,8 +19,7 @@ spring:
         format_sql: true
 
 logging:
+  config: classpath:logback.xml
   level:
-    org:
-      hibernate:
-        SQL: debug
-        type: trace
+    root: INFO
+    swyg.hollang: DEBUG
