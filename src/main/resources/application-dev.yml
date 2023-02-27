@@ -19,6 +19,7 @@ spring:
         format_sql: true
 
 logging:
+  config: classpath:logback.xml
   level:
     root: INFO
     swyg.hollang: DEBUG

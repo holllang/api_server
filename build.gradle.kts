@@ -38,6 +38,9 @@ dependencies {
     implementation("software.amazon.awssdk:kms:2.17.97")
     implementation("software.amazon.awssdk:s3:2.17.97")
 
+    //LOGGING
+    implementation("ca.pjer:logback-awslogs-appender:1.6.0")
+
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
