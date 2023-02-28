@@ -24,6 +24,7 @@ class InitDb(private val initService: InitService) {
     fun init() {
         initService.initTestData(1)
         initService.initHobbyTypeData()
+        initService.initCategoryData()
         initService.initHobbyData()
     }
 
@@ -87,6 +88,20 @@ class InitDb(private val initService: InitService) {
             em.persist(test)
         }
 
+        fun initCategoryData(){
+            val workbook = initFile()
+
+            val sheet = workbook.getSheet("category")
+            for (rowIndex in 1..sheet.lastRowNum) {
+                val row = sheet.getRow(rowIndex)
+
+                val name = row.getCell(0).stringCellValue
+                val level = row.getCell(1).numericCellValue.toInt()
+                val category = Category(name, level)
+                em.persist(category)
+            }
+        }
+
         fun initHobbyData() {
             val workbook = initFile()
 
@@ -94,10 +109,15 @@ class InitDb(private val initService: InitService) {
             for (rowIndex in 1..sheet.lastRowNum) {
                 val row = sheet.getRow(rowIndex)
 
-                val categories = mutableListOf<Category>()
+
                 val name = row.getCell(0).stringCellValue
                 val description = row.getCell(1).stringCellValue
                 val imageName = row.getCell(2).stringCellValue
+                val categoryName = row.getCell(3).stringCellValue
+                val findCategory = em.createQuery("select c from Category c where c.name = :name", Category::class.java)
+                    .setParameter("name", categoryName)
+                    .singleResult
+                val categories = mutableListOf<Category>(findCategory)
                 val imageUrl =
                     "${cloudfrontHost}/images/hobby/$imageName.png"
                 val hobby = Hobby(categories, name, description, imageUrl)
