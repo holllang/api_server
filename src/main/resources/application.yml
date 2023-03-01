@@ -33,3 +33,10 @@ inferring:
 client:
   server:
     host: ${CLIENT_SERVER_HOST}
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 10000

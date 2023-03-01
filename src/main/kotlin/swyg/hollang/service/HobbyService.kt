@@ -12,7 +12,6 @@ import swyg.hollang.repository.hobby.HobbyRepository
 class HobbyService(private val hobbyRepository: HobbyRepository) {
 
     //추천받은 취미의 추천 카운트를 1씩 증가
-    @Transactional
     fun addHobbiesRecommendCount(hobbies: MutableList<MutableMap<String, String>>): Int {
         val names = hobbies.map { it["name"]!! }
         return hobbyRepository.updateRecommendCountByName(names)

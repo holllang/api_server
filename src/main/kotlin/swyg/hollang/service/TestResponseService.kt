@@ -10,7 +10,6 @@ import swyg.hollang.repository.testresponse.TestResponseRepository
 @Transactional(readOnly = true)
 class TestResponseService(private val testResponseRepository: TestResponseRepository) {
 
-    @Transactional
     fun createTestResponse(user: User): TestResponse {
         return testResponseRepository.save(user)
     }
