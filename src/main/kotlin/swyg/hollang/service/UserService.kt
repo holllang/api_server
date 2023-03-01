@@ -10,7 +10,6 @@ import swyg.hollang.repository.user.UserRepository
 @Transactional(readOnly = true)
 class UserService(private val userRepository: UserRepository) {
 
-    @Transactional
     fun createUser(createUserRequest: CreateUserRequest): User {
         return userRepository.save(createUserRequest)
     }
