@@ -41,6 +41,9 @@ dependencies {
     //LOGGING
     implementation("ca.pjer:logback-awslogs-appender:1.6.0")
 
+    //configuration processor
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

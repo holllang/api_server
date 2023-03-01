@@ -71,7 +71,6 @@
     <springProfile name="prod">
         <root level="info">
             <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="aws_cloud_watch_log_prod"/>
         </root>
 
         <logger name="com.amazonaws.util.EC2MetadataUtils" level="error" additivity="false">

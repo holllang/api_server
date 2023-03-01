@@ -12,7 +12,6 @@ import swyg.hollang.repository.recommendation.RecommendationRepository
 @Transactional(readOnly = true)
 class RecommendationService(private val recommendationRepository: RecommendationRepository) {
 
-    @Transactional
     fun save(testResponse: TestResponse, createRecommendationResultResponse: CreateRecommendationResultResponse)
         : Recommendation {
         val result = mutableMapOf<String, Any>()

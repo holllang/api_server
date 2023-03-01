@@ -16,7 +16,6 @@ class TestResponseDetailService(
     private val answerRepository: AnswerRepository,
     private val testResponseDetailRepository: TestResponseDetailRepository) {
 
-    @Transactional
     fun createTestResponseDetail(
         testResponse: TestResponse,
         createTestResponseDetailRequests: MutableList<CreateTestResponseDetailRequest>): Int {
