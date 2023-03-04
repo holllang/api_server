@@ -4,6 +4,7 @@ import com.amazonaws.auth.DefaultAWSCredentialsProviderChain
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import jakarta.annotation.PostConstruct
 import jakarta.persistence.EntityManager
+import jakarta.persistence.PersistenceContext
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -31,9 +32,10 @@ class InitDb(private val initService: InitService) {
     @Component
     @Transactional
     @Profile(value = ["local", "dev"])
-    class InitService(
-        @Value("\${spring.config.activate.on-profile}") private val activeProfile: String,
-        @Autowired private val em: EntityManager) {
+    class InitService(@Value("\${spring.config.activate.on-profile}") private val activeProfile: String) {
+
+        @PersistenceContext
+        private lateinit var em: EntityManager
 
         @Value("\${aws.s3.bucket}")
         private lateinit var bucketName: String

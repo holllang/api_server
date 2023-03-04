@@ -43,8 +43,8 @@ class TestResponseControllerTest(
 
         val hobby1 = Hobby(
             mutableListOf(),
-            "연극 보러가기",
-            "연극 보러가기 상세정보",
+            "유튜버 시작하기",
+            "유튜버 시작하기 상세정보",
             "https://example.com/hollang.png"
         )
         val hobby2 = Hobby(

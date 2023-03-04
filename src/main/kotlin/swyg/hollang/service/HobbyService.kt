@@ -17,7 +17,7 @@ class HobbyService(private val hobbyRepository: HobbyRepository) {
         val names = hobbies.map { it["name"] ?: "" }
         val updatedHobbyNumber = hobbyRepository.updateRecommendCountByName(names)
         if(updatedHobbyNumber != hobbies.size){
-            throw EntityNotFoundException("추천 수를 증가시킬 취미의 개수가 일치하지 않습니다.")
+            throw EntityNotFoundException("취미 ${names[0]}, ${names[1]}, ${names[2]} 중 하나를 찾을 수 없습니다.")
         }
         return updatedHobbyNumber
     }
