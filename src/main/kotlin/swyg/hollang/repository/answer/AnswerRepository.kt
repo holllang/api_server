@@ -4,5 +4,5 @@ import swyg.hollang.entity.Answer
 
 interface AnswerRepository {
 
-    fun findByQuestionNumberWithTestVersion(answerNumber: Long, questionNumber: Long, testVersion: Long): Answer
+    fun findByQuestionNumberPairsWithTestVersion(questionAnswerPairs: List<Pair<Long, Long>>, testVersion: Long): List<Answer>
 }
