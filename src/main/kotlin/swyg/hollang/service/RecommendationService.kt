@@ -14,10 +14,11 @@ class RecommendationService(private val recommendationRepository: Recommendation
 
     fun save(testResponse: TestResponse, createRecommendationResultResponse: CreateRecommendationResultResponse)
         : Recommendation {
-        val result = mutableMapOf<String, Any>()
-        result["hobbyType"] = createRecommendationResultResponse.hobbyType
-        result["hobbies"] = createRecommendationResultResponse.hobbies
-        return recommendationRepository.save(testResponse, result)
+        val result = mutableMapOf(
+            "hobbyType" to createRecommendationResultResponse.hobbyType,
+            "hobbies" to createRecommendationResultResponse.hobbies
+        )
+        return recommendationRepository.save(testResponse = testResponse, result = result)
     }
 
     fun getRecommendationWithUserById(recommendationId: Long): Recommendation {

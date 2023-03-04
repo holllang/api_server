@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 import swyg.hollang.trace.logtrace.LogTrace
 
-
 @Configuration
 class AopConfig {
 

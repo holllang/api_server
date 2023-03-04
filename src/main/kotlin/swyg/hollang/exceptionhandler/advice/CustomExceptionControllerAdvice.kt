@@ -19,7 +19,6 @@ class CustomExceptionControllerAdvice {
 
     @ExceptionHandler(EntityNotFoundException::class)
     fun entityNotFoundExHandler(ex: EntityNotFoundException): ResponseEntity<ExceptionResponse> {
-        logger.error(ex.cause.toString())
         return ResponseEntity
             .badRequest()
             .body(ExceptionResponse(HttpStatus.BAD_REQUEST.name, ex.message.toString()))
@@ -27,7 +26,6 @@ class CustomExceptionControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleValidationException(ex: MethodArgumentNotValidException): ResponseEntity<ExceptionResponse> {
-        logger.error(ex.cause.toString())
         val defaultMessage = ex.bindingResult.fieldError?.defaultMessage
         return ResponseEntity.badRequest().body(ExceptionResponse(HttpStatus.BAD_REQUEST.name, defaultMessage.toString()))
     }
