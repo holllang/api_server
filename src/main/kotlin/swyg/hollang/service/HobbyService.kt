@@ -1,5 +1,6 @@
 package swyg.hollang.service
 
+import jakarta.persistence.EntityNotFoundException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -13,8 +14,12 @@ class HobbyService(private val hobbyRepository: HobbyRepository) {
 
     //추천받은 취미의 추천 카운트를 1씩 증가
     fun addHobbiesRecommendCount(hobbies: MutableList<MutableMap<String, String>>): Int {
-        val names = hobbies.map { it["name"]!! }
-        return hobbyRepository.updateRecommendCountByName(names)
+        val names = hobbies.map { it["name"] ?: "" }
+        val updatedHobbyNumber = hobbyRepository.updateRecommendCountByName(names)
+        if(updatedHobbyNumber != hobbies.size){
+            throw EntityNotFoundException("취미 ${names[0]}, ${names[1]}, ${names[2]} 중 하나를 찾을 수 없습니다.")
+        }
+        return updatedHobbyNumber
     }
 
     fun getHobbyByName(names: List<String>): List<Hobby> {

@@ -6,6 +6,9 @@ plugins {
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
     kotlin("plugin.jpa") version "1.7.22"
+    //QueryDSL
+    kotlin("kapt") version "1.7.21"
+    idea
 }
 
 group = "swyg"
@@ -44,6 +47,10 @@ dependencies {
     //configuration processor
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
+    // == 스프링 부트 3.0 이상 QueryDSL ==
+    implementation("com.infobip:infobip-spring-data-jpa-querydsl-boot-starter:8.0.0")
+    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -71,4 +78,13 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+// QClass를 Intellij가 사용할 수 있도록 경로에 추가합니다
+idea {
+    module {
+        val kaptMain = file("build/generated/source/kapt/main")
+        sourceDirs.add(kaptMain)
+        generatedSourceDirs.add(kaptMain)
+    }
 }

@@ -21,7 +21,7 @@ class TestController(private val testService: TestService) {
     fun testDetails(@RequestParam(value = "version", required = true) version: Long)
         : ResponseEntity<SuccessResponse<TestDetailsResponse>> {
 
-        val testDetailsResponse: TestDetailsResponse = testService.findTestByVersion(version)
+        val testDetailsResponse: TestDetailsResponse = testService.findShuffledTestByVersion(version)
         return ResponseEntity.ok()
             .body(SuccessResponse(HttpStatus.OK.name, WebProperties.SUCCESS_RESPONSE_MESSAGE, testDetailsResponse))
     }
