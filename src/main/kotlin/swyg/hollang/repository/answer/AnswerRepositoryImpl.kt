@@ -10,7 +10,6 @@ import swyg.hollang.entity.QTest.test
 
 @Repository
 class AnswerRepositoryImpl(
-    private val answerJpaRepository: AnswerJpaRepository,
     private val jpaQueryFactory: JPAQueryFactory): AnswerRepository {
 
     override fun findByQuestionNumberPairsWithTestVersion(

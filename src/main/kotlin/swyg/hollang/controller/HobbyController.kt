@@ -20,9 +20,9 @@ class HobbyController(
     @GetMapping
     fun getHobbiesRank(@RequestParam(name = "page", defaultValue = "0") page: Int,
                        @RequestParam(name = "size", defaultValue = "20") size: Int,
-                       @RequestParam(name = "sort", defaultValue = "recommendCount") recommendCount: String)
+                       @RequestParam(name = "sort", defaultValue = "recommendCount") sort: String)
         : ResponseEntity<SuccessResponse<GetHobbiesRankResponse>>{
-        val pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "recommendCount"))
+        val pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sort))
         val hobbies = hobbyService.getHobbies(pageRequest)
 
         return ResponseEntity.ok()
