@@ -10,18 +10,18 @@ class TestResponse (
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
-    var user: User,
+    val user: User,
 
 ) : BaseTimeEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "test_response_id")
-    var id: Long? = null
+    val id: Long? = null
 
     @OneToOne(mappedBy = "testResponse", fetch = LAZY, cascade = [ALL], orphanRemoval = true)
-    var recommendation: Recommendation? = null
+    val recommendation: Recommendation? = null
 
     @OneToMany(mappedBy = "testResponse", fetch = LAZY, cascade = [ALL], orphanRemoval = true)
-    var testResponseDetails: MutableList<TestResponseDetail> = mutableListOf()
+    val testResponseDetails: MutableList<TestResponseDetail> = mutableListOf()
 
 }

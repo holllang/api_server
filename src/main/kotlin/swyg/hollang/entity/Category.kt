@@ -8,21 +8,21 @@ import swyg.hollang.entity.common.BaseTimeEntity
 class Category (
 
     @Column(name = "name", nullable = false)
-    var name: String,
+    val name: String,
 
     @Column(name = "level", nullable = false)
-    var level: Int
+    val level: Int
 
 ) : BaseTimeEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    var id: Long? = null
+    val id: Long? = null
 
     @ManyToOne
     @JoinColumn(name = "category_parent_id")
-    var parent: Category? = null
+    val parent: Category? = null
 
     @ManyToMany(mappedBy = "categories", fetch = LAZY)
-    var hobbies: MutableList<Hobby>? = null
+    val hobbies: MutableList<Hobby>? = null
 }

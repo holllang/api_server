@@ -11,15 +11,15 @@ class Recommendation (
 
     @OneToOne
     @JoinColumn(name = "test_response_id", nullable = false, updatable = false)
-    var testResponse: TestResponse,
+    val testResponse: TestResponse,
 
     @Type(JsonType::class)
     @Column(name = "result", columnDefinition = "json", nullable = false, updatable = false)
-    var result: MutableMap<String, Any>? = mutableMapOf()
+    val result: MutableMap<String, Any>? = mutableMapOf()
 
 ) : BaseTimeEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recommendation_id")
-    var id: Long? = null
+    val id: Long? = null
 }

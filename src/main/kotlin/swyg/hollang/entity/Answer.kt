@@ -8,18 +8,18 @@ class Answer (
 
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
-    var question: Question,
+    val question: Question,
 
     @Column(name = "answer_number", nullable = false)
-    var number: Long,
+    val number: Long,
 
     @Column(name = "content", nullable = false)
-    var content: String
+    val content: String
 
 ) : BaseTimeEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "answer_id")
-    var id: Long? = null
+    val id: Long? = null
 
 }

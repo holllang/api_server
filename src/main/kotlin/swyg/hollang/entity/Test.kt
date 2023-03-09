@@ -9,14 +9,14 @@ import swyg.hollang.entity.common.BaseTimeEntity
 class Test (
 
     @Column(name = "version", unique = true, updatable = false, nullable = false)
-    var version: Long
+    val version: Long
 
 ) : BaseTimeEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "test_id")
-    var id: Long? = null
+    val id: Long? = null
 
     @OneToMany(mappedBy = "test", fetch = LAZY, cascade = [ALL], orphanRemoval = true)
-    var questions: MutableList<Question> = mutableListOf()
+    val questions: MutableList<Question> = mutableListOf()
 }
