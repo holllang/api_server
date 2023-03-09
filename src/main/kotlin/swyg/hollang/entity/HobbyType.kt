@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import swyg.hollang.entity.common.BaseTimeEntity
 
 @Entity
+@Table(indexes = [Index(name = "idx_mbti_type", columnList = "mbti_type")])
 class HobbyType(
 
     @Column(name = "name", nullable = false)

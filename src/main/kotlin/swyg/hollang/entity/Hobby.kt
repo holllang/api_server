@@ -8,6 +8,7 @@ import swyg.hollang.entity.common.BaseTimeEntity
 
 @Entity
 @DynamicInsert  //DML 작동시 null값이 아닌 값만 작동함
+@Table(indexes = [Index(name = "idx_name", columnList = "name")])
 class Hobby (
 
     @ManyToMany(fetch = LAZY, cascade = [CascadeType.ALL])
