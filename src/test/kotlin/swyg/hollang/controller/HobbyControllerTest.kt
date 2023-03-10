@@ -44,7 +44,7 @@ class HobbyControllerTest(
         //given
         val page = 0
         val size = 20
-        val sort = "recommend_count"
+        val sort = "recommendCount"
 
         //then
         mockMvc.perform(

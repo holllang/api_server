@@ -42,16 +42,15 @@ class AnswerRepositoryTest(
     @Test
     fun findByQuestionNumberWithTestVersion() {
         //given
-        val answerNumber: Long = 2
-        val questionNumber: Long = 1
+        val questionAnswerPairs = listOf(Pair(1L, 2L))
         val testVersion: Long = 1
 
         //when
-        val findAnswer =
-            answerRepository.findByQuestionNumberWithTestVersion(answerNumber, questionNumber, testVersion)
+        val findAnswers =
+            answerRepository.findByQuestionNumberPairsWithTestVersion(questionAnswerPairs, testVersion)
 
         //then
-        assertThat(findAnswer.content).isEqualTo("질문 1 답변 2")
-        assertThat(findAnswer.question.content).isEqualTo("질문 1")
+        assertThat(findAnswers[0].content).isEqualTo("질문 1 답변 2")
+        assertThat(findAnswers[0].question.content).isEqualTo("질문 1")
     }
 }

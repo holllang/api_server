@@ -4,34 +4,35 @@ import jakarta.persistence.*
 import swyg.hollang.entity.common.BaseTimeEntity
 
 @Entity
+@Table(indexes = [Index(name = "idx_mbti_type", columnList = "mbti_type")])
 class HobbyType(
 
     @Column(name = "name", nullable = false)
-    var name: String,
+    val name: String,
 
     @Column(name = "description", nullable = false)
-    var description: String,
+    val description: String,
 
     @Column(name = "mbti_type", nullable = false, length = 4)
-    var mbtiType: String,
+    val mbtiType: String,
 
     @Column(name = "three_dimension_img_url", nullable = false)
-    var threeDimensionImageUrl: String,
+    val threeDimensionImageUrl: String,
 
     @Column(name = "img_url", nullable = false)
-    var imageUrl: String,
+    val imageUrl: String,
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
         name="fit_hobby_type",
         joinColumns = [JoinColumn(name = "hobby_type_id")]
     )
-    var fitHobbyTypes: MutableList<String> = mutableListOf()
+    val fitHobbyTypes: MutableList<String> = mutableListOf()
 
 ) : BaseTimeEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hobby_type_id")
-    var id: Long? = null
+    val id: Long? = null
 
 }

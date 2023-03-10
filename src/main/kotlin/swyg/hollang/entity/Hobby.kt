@@ -8,6 +8,7 @@ import swyg.hollang.entity.common.BaseTimeEntity
 
 @Entity
 @DynamicInsert  //DML 작동시 null값이 아닌 값만 작동함
+@Table(indexes = [Index(name = "idx_name", columnList = "name")])
 class Hobby (
 
     @ManyToMany(fetch = LAZY, cascade = [CascadeType.ALL])
@@ -16,24 +17,24 @@ class Hobby (
         joinColumns = [JoinColumn(name = "hobby_id")],
         inverseJoinColumns = [JoinColumn(name = "category_id")]
     )
-    var categories: MutableList<Category>,
+    val categories: MutableList<Category>,
 
     @Column(name = "name", nullable = false)
-    var name: String,
+    val name: String,
 
     @Column(name = "description", nullable = false)
-    var description: String,
+    val description: String,
 
     @Column(name = "img_url", nullable = false)
-    var imageUrl: String,
+    val imageUrl: String,
 
     ) : BaseTimeEntity() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hobby_id")
-    var id: Long? = null
+    val id: Long? = null
 
     @Column(name = "recommend_count")
     @ColumnDefault(value = 0.toString())
-    var recommendCount: Long? = 0
+    var recommendCount: Long = 0
 }

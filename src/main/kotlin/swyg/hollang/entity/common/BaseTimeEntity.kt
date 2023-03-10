@@ -15,10 +15,10 @@ abstract class BaseTimeEntity (
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false,
         columnDefinition="DATETIME(0) default CURRENT_TIMESTAMP")
-    var createdAt: ZonedDateTime? = ZonedDateTime.now(),
+    val createdAt: ZonedDateTime? = ZonedDateTime.now(),
 
     @LastModifiedDate
     @Column(name = "updated_at", nullable = false,
         columnDefinition="DATETIME(0) default CURRENT_TIMESTAMP")
-    var updatedAt: ZonedDateTime? = ZonedDateTime.now()
+    val updatedAt: ZonedDateTime? = ZonedDateTime.now()
 )

@@ -12,31 +12,27 @@ class ThreadLocalLogTrace: LogTrace {
     private val traceIdHolder: ThreadLocal<TraceId> = ThreadLocal()
 
     companion object {
-        val START_PREFIX: String = "-->"
-        val COMPLETE_PREFIX: String = "<--"
-        val EX_PREFIX: String = "<X--"
+        const val START_PREFIX: String = "-->"
+        const val COMPLETE_PREFIX: String = "<--"
+        const val EX_PREFIX: String = "<X--"
     }
 
     override fun begin(message: String): TraceStatus {
         syncTraceId()
         val traceId = traceIdHolder.get()
         val startTimeMs = System.currentTimeMillis()
-        logger.info(
-            "[{}] {}{}", traceId.id, addSpace(
-                START_PREFIX,
-                traceId.level
-            ), message
-        )
+        val prefix = addSpace(START_PREFIX, traceId.level)
+        logger.info("[{}] {}{}", traceId.id, prefix, message)
         return TraceStatus(traceId, startTimeMs, message)
     }
 
     private fun syncTraceId() {
-        val traceId = traceIdHolder.get()
-        if (traceId == null) {
-            traceIdHolder.set(TraceId())
-        } else {
-            traceIdHolder.set(traceId.createNextId())
-        }
+        traceIdHolder.set(
+            when(val traceId = traceIdHolder.get()){
+                null -> TraceId()
+                else -> traceId.createNextId()
+            }
+        )
     }
 
     override fun end(status: TraceStatus) {
@@ -51,18 +47,14 @@ class ThreadLocalLogTrace: LogTrace {
         val stopTimeMs = System.currentTimeMillis()
         val resultTimeMs: Long = stopTimeMs - status.startTimeMs
         val traceId: TraceId = status.traceId
-        if (e == null) {
-            logger.info(
-                "[{}] {}{} time={}ms", traceId.id,
-                addSpace(COMPLETE_PREFIX, traceId.level), status.message,
-                resultTimeMs
-            )
-        } else {
-            logger.info(
-                "[{}] {}{} time={}ms ex={}", traceId.id,
-                addSpace(EX_PREFIX, traceId.level), status.message, resultTimeMs,
-                e.toString()
-            )
+        val prefix = when(e){
+            null -> addSpace(COMPLETE_PREFIX, traceId.level)
+            else -> addSpace(EX_PREFIX, traceId.level)
+        }
+        val logMsg = "[${traceId.id}] ${prefix}${status.message} time=${resultTimeMs}ms"
+        when(e){
+            null -> logger.info(logMsg)
+            else -> logger.error("$logMsg ex={}", e.toString())
         }
         releaseTraceId()
     }
@@ -79,12 +71,11 @@ class ThreadLocalLogTrace: LogTrace {
     }
 
     private fun addSpace(prefix: String, level: Int): String {
-        val sb = StringBuilder()
-        for (i in 0 until level) {
-            sb.append(if (i == level - 1) "|$prefix" else "|   ")
+        return buildString {
+            for(i in 0 until level){
+                append(if (i == level - 1) "|$prefix" else "|   ")
+            }
         }
-        return sb.toString()
     }
-
 
 }

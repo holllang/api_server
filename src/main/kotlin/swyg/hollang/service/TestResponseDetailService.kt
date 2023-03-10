@@ -3,12 +3,10 @@ package swyg.hollang.service
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import swyg.hollang.dto.CreateTestResponseDetailRequest
-import swyg.hollang.dto.CreateTestResponseRequest
 import swyg.hollang.entity.TestResponse
 import swyg.hollang.entity.TestResponseDetail
 import swyg.hollang.repository.answer.AnswerRepository
 import swyg.hollang.repository.testresponsedetail.TestResponseDetailRepository
-import java.time.ZonedDateTime
 
 @Service
 @Transactional(readOnly = true)
@@ -20,17 +18,18 @@ class TestResponseDetailService(
         testResponse: TestResponse,
         createTestResponseDetailRequests: MutableList<CreateTestResponseDetailRequest>): Int {
 
-        val testResponseDetails = mutableListOf<TestResponseDetail>()
-        for (createTestResponseDetailRequest in createTestResponseDetailRequests) {
-            val findAnswer = answerRepository
-                .findByQuestionNumberWithTestVersion(
-                    createTestResponseDetailRequest.answerNumber,
-                    createTestResponseDetailRequest.questionNumber,
-                    1)
-            val testResponseDetail = TestResponseDetail(testResponse, findAnswer)
-            testResponseDetails.add(testResponseDetail)
+        val questionAnswerPairs = createTestResponseDetailRequests.map {
+            it.questionNumber to it.answerNumber
+        }
+
+        val findAnswers =
+            answerRepository.findByQuestionNumberPairsWithTestVersion(questionAnswerPairs, 1)
+
+        val testResponseDetails = findAnswers.map {
+            TestResponseDetail(testResponse = testResponse, answer = it)
         }
 
         return testResponseDetailRepository.batchInsert(testResponseDetails)
     }
+
 }
