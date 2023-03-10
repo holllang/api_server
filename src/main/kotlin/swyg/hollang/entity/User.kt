@@ -8,7 +8,7 @@ import swyg.hollang.entity.common.BaseTimeEntity
 @Entity
 class User (
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 3)
     val name: String,
 
 ) : BaseTimeEntity() {

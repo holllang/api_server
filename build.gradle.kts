@@ -8,7 +8,6 @@ plugins {
     kotlin("plugin.jpa") version "1.7.22"
     //QueryDSL
     kotlin("kapt") version "1.7.21"
-    idea
 }
 
 group = "swyg"
@@ -78,13 +77,4 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-// QClass를 Intellij가 사용할 수 있도록 경로에 추가합니다
-idea {
-    module {
-        val kaptMain = file("build/generated/source/kapt/main")
-        sourceDirs.add(kaptMain)
-        generatedSourceDirs.add(kaptMain)
-    }
 }

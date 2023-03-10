@@ -36,6 +36,7 @@ class RecommendationManager(
 
     private fun extractHobbyNames(findRecommendation: Recommendation) =
         findRecommendation.result?.get("hobbies")?.let { hobbies ->
+            //value가 null값이 아닌 결과만 반환한다
             (hobbies as? List<Map<String, String>>)?.mapNotNull { it["name"] }
         } ?: emptyList()
 
